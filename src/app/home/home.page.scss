@@ -58,3 +58,75 @@
   height: 50px;
   font-weight: 600;
 }
+
+// Estilos para el estado de autenticación
+.auth-status {
+  margin: 20px;
+  
+  .auth-card {
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    
+    &.authenticated {
+      border: 2px solid var(--ion-color-success);
+      
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        
+        ion-icon {
+          font-size: 24px;
+        }
+        
+        h3 {
+          margin: 0;
+          color: var(--ion-color-success);
+          font-weight: 600;
+        }
+        
+        p {
+          margin: 4px 0 0 0;
+          color: var(--ion-color-medium);
+          font-size: 14px;
+        }
+      }
+      
+      .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+    
+    ion-card-content {
+      text-align: center;
+      
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 8px 0;
+        color: var(--ion-color-primary);
+      }
+      
+      p {
+        color: var(--ion-color-medium);
+        margin-bottom: 20px;
+      }
+      
+      .demo-login-btn {
+        margin: 16px 0;
+        --border-radius: 20px;
+        height: 45px;
+        font-weight: 600;
+      }
+      
+      small {
+        display: block;
+        margin-top: 8px;
+        font-size: 12px;
+      }
+    }
+  }
+}

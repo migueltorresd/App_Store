@@ -55,8 +55,45 @@
       </ion-card>
     </div>
     
-    <ion-button expand="block" color="primary" class="cta-button">
-      Explorar Productos
-    </ion-button>
+    <!-- Estado de autenticación -->
+    <div class="auth-status" *ngIf="!isAuthenticated">
+      <ion-card class="auth-card">
+        <ion-card-content>
+          <h3>🔒 ¡Inicia sesión para continuar!</h3>
+          <p>Accede a tu cuenta para explorar y comprar productos</p>
+          <ion-button expand="block" color="primary" (click)="quickLogin()" class="demo-login-btn">
+            🎯 Login Demo Rápido
+          </ion-button>
+          <ion-text color="medium">
+            <small>Usará credenciales: admin@electrostore.com</small>
+          </ion-text>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div class="auth-status" *ngIf="isAuthenticated">
+      <ion-card class="auth-card authenticated">
+        <ion-card-content>
+          <div class="user-info">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <div>
+              <h3>¡Hola, {{currentUser?.nombre}}!</h3>
+              <p>Bienvenido de vuelta a ElectroStore</p>
+            </div>
+          </div>
+          
+          <div class="action-buttons">
+            <ion-button expand="block" color="primary" class="cta-button">
+              Explorar Productos
+            </ion-button>
+            
+            <ion-button expand="block" fill="outline" color="medium" (click)="logout()">
+              <ion-icon name="log-out-outline" slot="start"></ion-icon>
+              Cerrar Sesión
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
 </ion-content>
