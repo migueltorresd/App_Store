@@ -61,10 +61,10 @@ export class HomePage implements OnInit {
   }
 
   /**
-   * Navegar a sección que requiere autenticación (para probar guard)
+   * Navegar a productos
    */
-  goToProtectedSection() {
-    // Esto activará el guard de autenticación
-    this.router.navigate(['/productos']); // Crearemos esta ruta protegida después
+  goToProducts() {
+    console.log('🛍️ Navegando a productos...');
+    this.router.navigate(['/products']);
   }
 }

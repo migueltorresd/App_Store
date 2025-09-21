@@ -1,0 +1,147 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Productos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openSearch()">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="cart-outline"></ion-icon>
+        <ion-badge color="danger" *ngIf="cartCount > 0">{{cartCount}}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+  <!-- Barra de búsqueda -->
+  <ion-toolbar *ngIf="showSearchbar" class="search-toolbar">
+    <ion-searchbar 
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearch($event)"
+      (ionClear)="clearSearch()"
+      placeholder="Buscar productos..."
+      debounce="500"
+      animated="true">
+    </ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="closeSearch()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Filtros rápidos por categoría -->
+  <div class="category-filters">
+    <ion-segment 
+      [(ngModel)]="selectedCategory" 
+      (ionChange)="onCategoryChange($event)"
+      scrollable="true">
+      <ion-segment-button value="all">
+        <ion-label>Todos</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="smartphones">
+        <ion-icon name="phone-portrait-outline"></ion-icon>
+        <ion-label>Smartphones</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="laptops">
+        <ion-icon name="laptop-outline"></ion-icon>
+        <ion-label>Laptops</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="audio">
+        <ion-icon name="headset-outline"></ion-icon>
+        <ion-label>Audio</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="gaming">
+        <ion-icon name="game-controller-outline"></ion-icon>
+        <ion-label>Gaming</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- Loading state -->
+  <div class="loading-container" *ngIf="isLoading">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Cargando productos...</p>
+  </div>
+
+  <!-- Lista de productos -->
+  <div class="products-container" *ngIf="!isLoading">
+    <div class="products-header">
+      <h2>{{getCategoryTitle()}}</h2>
+      <p *ngIf="filteredProducts.length > 0">
+        {{filteredProducts.length}} producto{{filteredProducts.length !== 1 ? 's' : ''}} encontrado{{filteredProducts.length !== 1 ? 's' : ''}}
+      </p>
+    </div>
+
+    <!-- Grid de productos -->
+    <div class="products-grid" *ngIf="filteredProducts.length > 0">
+      <ion-card 
+        class="product-card" 
+        *ngFor="let product of filteredProducts; trackBy: trackByProductId"
+        (click)="viewProduct(product)">
+        
+        <div class="product-image-container">
+          <img [src]="product.imagen" [alt]="product.nombre" class="product-image">
+          <div class="product-badge" *ngIf="product.descuento">
+            <span>-{{product.descuento}}%</span>
+          </div>
+          <div class="product-status" [ngClass]="product.estado">
+            <span *ngIf="product.estado === 'agotado'">Agotado</span>
+            <span *ngIf="product.stock < 5 && product.stock > 0">¡Últimas {{product.stock}} unidades!</span>
+          </div>
+        </div>
+        
+        <ion-card-content class="product-content">
+          <div class="product-brand">{{product.marca}}</div>
+          <h3 class="product-name">{{product.nombre}}</h3>
+          <p class="product-description">{{product.descripcionCorta}}</p>
+          
+          <div class="product-rating">
+            <div class="stars">
+              <ion-icon 
+                *ngFor="let star of [1,2,3,4,5]" 
+                [name]="star <= product.valoracion ? 'star' : 'star-outline'"
+                [color]="star <= product.valoracion ? 'warning' : 'medium'">
+              </ion-icon>
+            </div>
+            <span class="rating-text">({{product.numeroReviews}})</span>
+          </div>
+          
+          <div class="product-pricing">
+            <div class="current-price">
+              {{product.precio | currency:'COP':'symbol':'1.0-0'}}
+            </div>
+            <div class="original-price" *ngIf="product.precioOriginal">
+              {{product.precioOriginal | currency:'COP':'symbol':'1.0-0'}}
+            </div>
+          </div>
+          
+          <ion-button 
+            expand="block" 
+            fill="solid"
+            color="primary"
+            [disabled]="product.estado === 'agotado'"
+            (click)="addToCart(product, $event)"
+            class="add-to-cart-btn">
+            <ion-icon name="cart-outline" slot="start"></ion-icon>
+            {{product.estado === 'agotado' ? 'Agotado' : 'Añadir al carrito'}}
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Estado sin resultados -->
+    <div class="no-results" *ngIf="filteredProducts.length === 0">
+      <ion-icon name="search-outline" size="large" color="medium"></ion-icon>
+      <h3>No se encontraron productos</h3>
+      <p>Intenta cambiar los filtros o realizar una nueva búsqueda</p>
+      <ion-button fill="outline" (click)="clearAllFilters()">
+        Limpiar filtros
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
