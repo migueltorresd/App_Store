@@ -8,7 +8,7 @@
       <ion-button (click)="openSearch()">
         <ion-icon name="search-outline"></ion-icon>
       </ion-button>
-      <ion-button>
+      <ion-button (click)="goToCart()">
         <ion-icon name="cart-outline"></ion-icon>
         <ion-badge color="danger" *ngIf="cartCount > 0">{{cartCount}}</ion-badge>
       </ion-button>

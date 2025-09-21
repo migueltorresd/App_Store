@@ -4,7 +4,9 @@ import { ToastController, AlertController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ProductsService } from '../../services/products';
+import { CartService } from '../../services/cart';
 import { Product, ProductCategory, ProductFilter } from '../../models/product.model';
+import { AddToCartRequest } from '../../models/cart.model';
 
 @Component({
   selector: 'app-products',
@@ -26,6 +28,7 @@ export class ProductsPage implements OnInit, OnDestroy {
 
   constructor(
     private productsService: ProductsService,
+    private cartService: CartService,
     private router: Router,
     private toastController: ToastController,
     private alertController: AlertController
@@ -45,6 +48,13 @@ export class ProductsPage implements OnInit, OnDestroy {
   ngOnInit() {
     console.log('🛍️ Inicializando página de productos...');
     this.loadProducts();
+    
+    // Suscribirse al resumen del carrito
+    this.cartService.cartSummary$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(summary => {
+        this.cartCount = summary.totalItems;
+      });
   }
 
   ngOnDestroy() {
@@ -186,11 +196,24 @@ export class ProductsPage implements OnInit, OnDestroy {
       return;
     }
 
-    // TODO: Integrar con servicio de carrito
-    this.cartCount++;
-    console.log('🛍️ Añadido al carrito:', product.nombre);
+    const request: AddToCartRequest = {
+      productId: product.id,
+      quantity: 1
+    };
+
+    const response = await this.cartService.addToCart(request);
     
-    await this.showSuccessToast(`${product.nombre} añadido al carrito`);
+    if (response.success) {
+      console.log('✅ Producto añadido al carrito:', product.nombre);
+      await this.showSuccessToast(response.message);
+      
+      // Actualizar contador local del carrito
+      const summary = this.cartService.getCartSummary();
+      this.cartCount = summary.totalItems;
+    } else {
+      console.log('❌ Error añadiendo al carrito:', response.message);
+      await this.showErrorToast(response.message);
+    }
   }
 
   /**
@@ -273,6 +296,14 @@ export class ProductsPage implements OnInit, OnDestroy {
       icon: 'checkmark-circle-outline'
     });
     await toast.present();
+  }
+
+  /**
+   * Navegar al carrito
+   */
+  goToCart(): void {
+    console.log('🛍️ Navegando al carrito...');
+    this.router.navigate(['/cart']);
   }
 
   /**
