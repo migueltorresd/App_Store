@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <!-- Botón de atrás -->
+    <ion-buttons slot="start" *ngIf="showBackButton">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <!-- Título -->
+    <ion-title>{{ title }}</ion-title>
+    
+    <!-- Botones para usuario autenticado -->
+    <ion-buttons slot="end" *ngIf="isAuthenticated">
+      <!-- Botón de búsqueda/productos -->
+      <ion-button (click)="goToProducts()">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+      
+      <!-- Botón de carrito -->
+      <ion-button (click)="goToCart()">
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+      
+      <!-- Botón de menú de usuario -->
+      <ion-button (click)="showUserMenu()">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </ion-button>
+      
+      <!-- Botón de cerrar sesión -->
+      <ion-button (click)="logout()" color="light">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <!-- Botones para usuario no autenticado -->
+    <ion-buttons slot="end" *ngIf="!isAuthenticated">
+      <ion-button (click)="goToLogin()" fill="clear">
+        Iniciar Sesión
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

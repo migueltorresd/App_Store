@@ -68,10 +68,6 @@ export class RegisterPage implements OnInit {
       confirmPassword: [
         '',
         [Validators.required]
-      ],
-      acceptTerms: [
-        false,
-        [Validators.requiredTrue]
       ]
     }, {
       validators: this.passwordMatchValidator // Validador personalizado
@@ -230,63 +226,6 @@ export class RegisterPage implements OnInit {
     this.router.navigate(['/login'], { replaceUrl: true });
   }
 
-  /**
-   * Abrir términos y condiciones
-   */
-  async openTerms() {
-    const alert = await this.alertController.create({
-      header: 'Términos y Condiciones',
-      message: `
-        <div style="text-align: left; font-size: 14px; line-height: 1.5;">
-          <h4>1. Aceptación de términos</h4>
-          <p>Al usar TechStore, aceptas estos términos de uso.</p>
-          
-          <h4>2. Uso del servicio</h4>
-          <p>Debes usar la app de manera responsable y legal.</p>
-          
-          <h4>3. Cuenta de usuario</h4>
-          <p>Eres responsable de mantener segura tu cuenta.</p>
-          
-          <h4>4. Privacidad</h4>
-          <p>Respetamos tu privacidad según nuestra política.</p>
-          
-          <h4>5. Modificaciones</h4>
-          <p>Podemos actualizar estos términos cuando sea necesario.</p>
-        </div>
-      `,
-      buttons: ['Cerrar']
-    });
-    await alert.present();
-  }
-
-  /**
-   * Abrir política de privacidad
-   */
-  async openPrivacy() {
-    const alert = await this.alertController.create({
-      header: 'Política de Privacidad',
-      message: `
-        <div style="text-align: left; font-size: 14px; line-height: 1.5;">
-          <h4>Información que recopilamos</h4>
-          <p>• Datos de registro (nombre, email)</p>
-          <p>• Información de uso de la app</p>
-          
-          <h4>Cómo usamos tu información</h4>
-          <p>• Crear y gestionar tu cuenta</p>
-          <p>• Mejorar nuestros servicios</p>
-          <p>• Comunicarnos contigo</p>
-          
-          <h4>Protección de datos</h4>
-          <p>Usamos medidas de seguridad para proteger tu información.</p>
-          
-          <h4>Tus derechos</h4>
-          <p>Puedes acceder, modificar o eliminar tus datos contactándonos.</p>
-        </div>
-      `,
-      buttons: ['Cerrar']
-    });
-    await alert.present();
-  }
 
   /**
    * Marcar todos los campos del formulario como tocados para mostrar errores

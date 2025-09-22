@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth';
+import { AuthService } from '../services/auth.service';
+import { ActionSheetController } from '@ionic/angular';
 import { User } from '../models/user.model';
 
 @Component({
@@ -15,7 +16,8 @@ export class HomePage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    public router: Router,
+    private actionSheetController: ActionSheetController
   ) {}
 
   ngOnInit() {
@@ -66,5 +68,54 @@ export class HomePage implements OnInit {
   goToProducts() {
     console.log('🛍️ Navegando a productos...');
     this.router.navigate(['/products']);
+  }
+
+  /**
+   * Mostrar menú de usuario
+   */
+  async showUserMenu() {
+    const actionSheet = await this.actionSheetController.create({
+      header: `Hola, ${this.currentUser?.nombre || 'Usuario'}`,
+      buttons: [
+        {
+          text: 'Ver Perfil',
+          icon: 'person-outline',
+          handler: () => {
+            console.log('👤 Navegando a perfil...');
+            // this.router.navigate(['/profile']);
+          }
+        },
+        {
+          text: 'Mis Pedidos',
+          icon: 'receipt-outline',
+          handler: () => {
+            console.log('📦 Navegando a pedidos...');
+            // this.router.navigate(['/orders']);
+          }
+        },
+        {
+          text: 'Configuración',
+          icon: 'settings-outline',
+          handler: () => {
+            console.log('⚙️ Navegando a configuración...');
+            // this.router.navigate(['/settings']);
+          }
+        },
+        {
+          text: 'Cerrar Sesión',
+          icon: 'log-out-outline',
+          role: 'destructive',
+          handler: () => {
+            this.logout();
+          }
+        },
+        {
+          text: 'Cancelar',
+          icon: 'close',
+          role: 'cancel'
+        }
+      ]
+    });
+    await actionSheet.present();
   }
 }

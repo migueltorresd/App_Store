@@ -1,14 +1,28 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <ion-title>
-      ElectroStore
+      TechStore
     </ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
+    <ion-buttons slot="end" *ngIf="isAuthenticated">
+      <ion-button (click)="goToProducts()">
         <ion-icon name="search-outline"></ion-icon>
       </ion-button>
       <ion-button>
         <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+      <!-- Botón de usuario/perfil con menú -->
+      <ion-button (click)="showUserMenu()">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </ion-button>
+      <!-- Botón de cerrar sesión -->
+      <ion-button (click)="logout()" color="light">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- Botones para usuario no autenticado -->
+    <ion-buttons slot="end" *ngIf="!isAuthenticated">
+      <ion-button (click)="router.navigate(['/login'])" fill="clear">
+        Iniciar Sesión
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -84,12 +98,8 @@
           
           <div class="action-buttons">
             <ion-button expand="block" color="primary" class="cta-button" (click)="goToProducts()">
+              <ion-icon name="storefront-outline" slot="start"></ion-icon>
               Explorar Productos
-            </ion-button>
-            
-            <ion-button expand="block" fill="outline" color="medium" (click)="logout()">
-              <ion-icon name="log-out-outline" slot="start"></ion-icon>
-              Cerrar Sesión
             </ion-button>
           </div>
         </ion-card-content>

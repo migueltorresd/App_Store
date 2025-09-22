@@ -3,28 +3,193 @@
  * ----------------------------------------------------------------------------
  * Put style rules here that you want to apply globally. These styles are for
  * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
+ * also used as an entry point to import other CSS/Sass files to be included
+ * in the output CSS.
+ *
  * For more information on global stylesheets, visit the documentation:
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
+@import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
 
+/* Variables globales para TechStore */
+:root {
+  /* Colores principales */
+  --techstore-primary: #667eea;
+  --techstore-primary-dark: #5a6fd8;
+  --techstore-secondary: #764ba2;
+  --techstore-secondary-dark: #6a4190;
+  
+  /* Gradientes */
+  --techstore-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --techstore-gradient-hover: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  
+  /* Colores de texto */
+  --techstore-text-primary: #1a1a1a;
+  --techstore-text-secondary: #5a5a5a;
+  --techstore-text-muted: #666666;
+  --techstore-text-light: #999999;
+  
+  /* Colores de fondo */
+  --techstore-bg-primary: #ffffff;
+  --techstore-bg-secondary: #fafafa;
+  --techstore-bg-input: #ffffff;
+  
+  /* Bordes */
+  --techstore-border-color: #e8e8e8;
+  --techstore-border-radius: 12px;
+  --techstore-border-radius-small: 8px;
+  
+  /* Sombras */
+  --techstore-shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --techstore-shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --techstore-shadow-primary: 0 4px 12px rgba(102, 126, 234, 0.3);
+  --techstore-shadow-primary-hover: 0 6px 16px rgba(102, 126, 234, 0.4);
+  
+  /* Estados */
+  --techstore-error: #dc3545;
+  --techstore-success: #28a745;
+  --techstore-warning: #ffc107;
+  
+  /* Transiciones */
+  --techstore-transition: all 0.3s ease;
+  --techstore-transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Clases utilitarias globales */
+
+// Botón principal con gradiente
+.techstore-btn-primary {
+  --background: var(--techstore-gradient);
+  --color: white;
+  --border-radius: var(--techstore-border-radius);
+  --box-shadow: var(--techstore-shadow-primary);
+  height: 56px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: var(--techstore-transition-smooth);
+  
+  &:hover:not([disabled]) {
+    --background: var(--techstore-gradient-hover);
+    --box-shadow: var(--techstore-shadow-primary-hover);
+    transform: translateY(-2px);
+  }
+  
+  &:active:not([disabled]) {
+    transform: translateY(0px);
+    --box-shadow: var(--techstore-shadow-primary);
+  }
+  
+  &[disabled] {
+    --background: #e0e0e0;
+    --color: var(--techstore-text-light);
+    --box-shadow: none;
+    opacity: 0.6;
+  }
+}
+
+// Link de navegación legible
+.techstore-nav-link {
+  --color: var(--techstore-primary) !important;
+  color: var(--techstore-primary) !important;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  transition: var(--techstore-transition);
+  
+  &:hover {
+    --color: var(--techstore-primary-dark) !important;
+    color: var(--techstore-primary-dark) !important;
+    transform: scale(1.05);
+    filter: brightness(1.1);
+  }
+}
+
+// Input con estilos consistentes
+.techstore-input {
+  --background: var(--techstore-bg-input);
+  --color: var(--techstore-text-primary);
+  --placeholder-color: var(--techstore-text-muted);
+  --border-radius: var(--techstore-border-radius);
+  --border-width: 2px;
+  --border-color: var(--techstore-border-color);
+  --padding-start: 18px;
+  --padding-end: 18px;
+  --min-height: 56px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: var(--techstore-transition);
+  box-shadow: var(--techstore-shadow-subtle);
+  
+  &:focus-within,
+  &.ion-focused {
+    --border-color: var(--techstore-primary);
+    --border-width: 2px;
+    --background: var(--techstore-bg-input);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+    transform: translateY(-1px);
+  }
+  
+  ion-input {
+    --color: var(--techstore-text-primary) !important;
+    --placeholder-color: var(--techstore-text-muted) !important;
+    font-weight: 500;
+  }
+}
+
+// Título con gradiente
+.techstore-title {
+  font-size: 32px;
+  font-weight: 700;
+  background: var(--techstore-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.8px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+// Subtitulo elegante
+.techstore-subtitle {
+  font-size: 17px;
+  color: var(--techstore-text-secondary);
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+// Mensaje de error con animación
+.techstore-error {
+  color: var(--techstore-error);
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 8px;
+  padding-left: 6px;
+  display: flex;
+  align-items: center;
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -40,28 +205,35 @@
 
 // Alert personalizado para preview de productos
 .product-preview-alert {
+  --color: #2d2d2d !important;
+  
   .alert-wrapper {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    max-width: 350px;
+    margin: 0 auto;
     
     .alert-head {
-      background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
-      color: white;
+      background: var(--techstore-gradient) !important;
+      color: white !important;
       padding: 20px;
       
       .alert-title {
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 700;
         margin: 0;
-        color: white;
+        color: white !important;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.2);
       }
       
       .alert-sub-title {
-        font-size: 14px;
-        margin: 4px 0 0 0;
-        opacity: 0.9;
-        color: white;
+        font-size: 15px;
+        margin: 8px 0 0 0;
+        opacity: 0.95;
+        color: white !important;
+        font-weight: 600;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
       }
     }
     
@@ -69,8 +241,9 @@
       padding: 20px;
       font-size: 16px;
       line-height: 1.6;
-      color: var(--ion-color-dark);
-      background: white;
+      color: #2d2d2d !important;
+      background: white !important;
+      white-space: pre-line;
     }
     
     .alert-button-group {
@@ -80,23 +253,27 @@
         font-weight: 600;
         
         &.alert-confirm-btn {
-          background: var(--ion-color-primary);
-          color: white;
+          background: var(--techstore-gradient) !important;
+          color: white !important;
+          border-radius: 8px;
+          font-weight: 600;
           
           &:hover {
-            background: var(--ion-color-primary-shade);
+            background: var(--techstore-gradient-hover) !important;
+            transform: translateY(-1px);
           }
         }
         
         &.alert-cancel-btn {
           background: transparent;
-          color: var(--ion-color-medium);
+          color: var(--techstore-text-secondary) !important;
+          font-weight: 600;
         }
         
         &.alert-disabled-btn {
-          background: var(--ion-color-medium);
-          color: var(--ion-color-medium-contrast);
-          opacity: 0.6;
+          background: #e0e0e0 !important;
+          color: #999999 !important;
+          opacity: 0.8;
           cursor: not-allowed;
         }
       }

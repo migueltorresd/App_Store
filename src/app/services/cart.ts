@@ -10,7 +10,7 @@ import {
   CartAction 
 } from '../models/cart.model';
 import { Product } from '../models/product.model';
-import { AuthService } from './auth';
+import { AuthService } from './auth.service';
 import { ProductsService } from './products';
 
 @Injectable({
@@ -35,8 +35,24 @@ export class CartService {
     private authService: AuthService,
     private productsService: ProductsService
   ) {
-    // Cargar carrito al inicializar
-    this.loadCart();
+    console.log('🛍️ CartService inicializando...');
+    
+    // Suscribirse a cambios de autenticación
+    this.authService.isAuthenticated$.subscribe(isAuth => {
+      if (isAuth) {
+        console.log('🔑 Usuario autenticado, cargando carrito...');
+        this.loadCart();
+      } else {
+        console.log('🚫 Usuario no autenticado, limpiando carrito...');
+        this.clearLocalCart();
+      }
+    });
+    
+    // Cargar carrito inicial si ya hay usuario autenticado
+    if (this.authService.isAuthenticated()) {
+      this.loadCart();
+    }
+    
     console.log('🛍️ CartService inicializado');
   }
 
@@ -106,18 +122,65 @@ export class CartService {
    */
   async addToCart(request: AddToCartRequest): Promise<CartResponse> {
     try {
+      console.log('🛍️ INICIO addToCart - Verificando autenticación...');
+      
+      // Debugging detallado de autenticación - Verificación robusta
+      const token = this.authService.getToken();
       const currentUser = this.authService.getCurrentUser();
-      if (!currentUser) {
+      const isAuthenticated = this.authService.isAuthenticated();
+      
+      // Verificación adicional directamente en localStorage
+      const localToken = localStorage.getItem('auth_token');
+      const localUser = localStorage.getItem('current_user');
+      
+      console.log('🔧 Verificación robusta de autenticación:');
+      console.log('  - authService.getToken():', token ? 'Existe' : 'No existe');
+      console.log('  - authService.getCurrentUser():', currentUser ? 'Existe' : 'No existe');
+      console.log('  - authService.isAuthenticated():', isAuthenticated);
+      console.log('  - localStorage token:', localToken ? 'Existe' : 'No existe');
+      console.log('  - localStorage user:', localUser ? 'Existe' : 'No existe');
+      
+      // Si los métodos del servicio fallan pero hay datos en localStorage, forzar recarga
+      if (!isAuthenticated && localToken && localUser) {
+        console.log('🔄 DETECTADO: Datos en localStorage pero servicio no sincronizado. Forzando recarga...');
+        // Forzar la verificación del AuthService
+        this.authService.checkStoredAuth();
+        // Esperar un poco para que se sincronice
+        await new Promise(resolve => setTimeout(resolve, 100));
+        // Verificar nuevamente
+        const newAuth = this.authService.isAuthenticated();
+        const newUser = this.authService.getCurrentUser();
+        console.log('  - Después de forzar recarga - isAuthenticated:', newAuth);
+        console.log('  - Después de forzar recarga - currentUser:', newUser ? 'Existe' : 'No existe');
+      }
+      
+      // Verificación final - usar variables actualizadas si se hizo recarga
+      const finalAuth = this.authService.isAuthenticated();
+      const finalUser = this.authService.getCurrentUser();
+      
+      console.log('🏁 Verificación FINAL:');
+      console.log('  - finalAuth:', finalAuth);
+      console.log('  - finalUser:', finalUser ? 'Existe' : 'No existe');
+      
+      if (!finalAuth || !finalUser) {
+        console.error('🚫 FALLO FINAL: Usuario no autenticado al añadir al carrito');
+        console.error('  - finalAuth:', finalAuth);
+        console.error('  - finalUser:', finalUser);
         return {
           success: false,
           message: 'Debes iniciar sesión para añadir productos al carrito',
           action: CartAction.ADD_ITEM
         };
       }
+      
+      console.log('✅ Usuario autenticado confirmado FINAL:', finalUser.email || finalUser.id);
+      
+      // Forzar la recarga del carrito para el usuario actual
+      await this.loadCart();
 
       let cart = this.cartSubject.value;
       if (!cart) {
-        this.createEmptyCart(currentUser.id);
+        this.createEmptyCart(finalUser.id || finalUser.email);
         cart = this.cartSubject.value!;
       }
 
@@ -388,5 +451,19 @@ export class CartService {
    */
   private generateCartItemId(): string {
     return 'item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  }
+  
+  /**
+   * Limpiar carrito local (cuando usuario no está autenticado)
+   */
+  private clearLocalCart(): void {
+    this.cartSubject.next(null);
+    this.cartSummarySubject.next({
+      totalItems: 0,
+      subtotal: 0,
+      total: 0,
+      isEmpty: true
+    });
+    console.log('🗑️ Carrito local limpiado');
   }
 }

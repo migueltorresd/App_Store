@@ -14,24 +14,29 @@
   margin: 0 auto;
 }
 
-// Header minimalista
+// Header elegante
 .header-section {
   text-align: center;
   margin-bottom: 48px;
   
   .app-name {
-    font-size: 28px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin: 0 0 8px 0;
-    letter-spacing: -0.5px;
+    font-size: 32px;
+    font-weight: 700;
+    background: var(--techstore-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .welcome-subtitle {
-    font-size: 16px;
-    color: #666666;
+    font-size: 17px;
+    color: var(--techstore-text-secondary);
     margin: 0;
-    font-weight: 400;
+    font-weight: 500;
+    line-height: 1.4;
   }
 }
 
@@ -44,75 +49,128 @@
   margin-bottom: 24px;
   
   .form-input {
-    --border-radius: 8px;
-    --border-width: 1px;
-    --border-color: #e0e0e0;
-    --padding-start: 16px;
-    --padding-end: 16px;
-    --min-height: 48px;
+    --background: var(--techstore-bg-input);
+    --color: var(--techstore-text-primary);
+    --placeholder-color: var(--techstore-text-muted);
+    --border-radius: var(--techstore-border-radius);
+    --border-width: 2px;
+    --border-color: var(--techstore-border-color);
+    --padding-start: 18px;
+    --padding-end: 18px;
+    --min-height: 56px;
     font-size: 16px;
+    font-weight: 500;
+    transition: var(--techstore-transition);
+    box-shadow: var(--techstore-shadow-subtle);
     
-    &:focus-within {
-      --border-color: var(--ion-color-primary);
+    &:focus-within,
+    &.ion-focused {
+      --border-color: var(--techstore-primary);
       --border-width: 2px;
+      --background: var(--techstore-bg-input);
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+      transform: translateY(-1px);
+    }
+    
+    ion-input {
+      --color: var(--techstore-text-primary) !important;
+      --placeholder-color: var(--techstore-text-muted) !important;
+      font-weight: 500;
     }
   }
   
   .toggle-password {
-    --color: #999999;
+    --color: #666666;
     margin: 0;
+    transition: all 0.3s ease;
     
     &:hover {
       --color: var(--ion-color-primary);
+      transform: scale(1.1);
     }
   }
   
   .error-message {
-    color: var(--ion-color-danger);
+    color: var(--techstore-error);
     font-size: 14px;
-    margin-top: 6px;
-    padding-left: 4px;
+    font-weight: 500;
+    margin-top: 8px;
+    padding-left: 6px;
+    display: flex;
+    align-items: center;
+    animation: shake 0.3s ease-in-out;
   }
 }
 
-// Botón de login minimalista
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+// Botón de login moderno
 .login-button {
-  --background: #1a1a1a;
+  --background: var(--techstore-gradient);
   --color: white;
-  --border-radius: 8px;
-  height: 48px;
+  --border-radius: var(--techstore-border-radius);
+  --box-shadow: var(--techstore-shadow-primary);
+  height: 56px;
   font-size: 16px;
-  font-weight: 500;
-  margin-top: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: var(--techstore-transition-smooth);
+  margin-top: 12px;
   
   &:hover:not([disabled]) {
-    --background: #333333;
+    --background: var(--techstore-gradient-hover);
+    --box-shadow: var(--techstore-shadow-primary-hover);
+    transform: translateY(-2px);
+  }
+  
+  &:active:not([disabled]) {
+    transform: translateY(0px);
+    --box-shadow: var(--techstore-shadow-primary);
   }
   
   &[disabled] {
-    --background: #cccccc;
-    --color: #999999;
+    --background: #e0e0e0;
+    --color: var(--techstore-text-light);
+    --box-shadow: none;
+    opacity: 0.6;
   }
   
   ion-spinner {
     margin-right: 8px;
+    --color: white;
   }
 }
 
-// Link a registro minimalista
+// Link a registro legible
 .register-link {
   text-align: center;
+  margin-top: 32px;
   
   p {
-    color: #666666;
+    color: var(--techstore-text-secondary);
     font-size: 16px;
+    font-weight: 500;
     margin: 0;
   }
   
   .register-button {
-    --color: var(--ion-color-primary);
-    font-weight: 500;
+    --color: var(--techstore-primary) !important;
+    color: var(--techstore-primary) !important;
+    font-weight: 600;
     font-size: 16px;
+    text-decoration: none;
+    transition: var(--techstore-transition);
+    
+    &:hover {
+      --color: var(--techstore-primary-dark) !important;
+      color: var(--techstore-primary-dark) !important;
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
   }
 }
 
