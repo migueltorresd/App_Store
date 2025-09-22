@@ -1,13 +1,163 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>cart</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/products"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi Carrito</ion-title>
+    <ion-buttons slot="end" *ngIf="!cartSummary.isEmpty">
+      <ion-button fill="clear" (click)="clearCart()">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">cart</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Loading state -->
+  <div class="loading-container" *ngIf="isLoading">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Cargando carrito...</p>
+  </div>
+
+  <!-- Carrito vacío -->
+  <div class="empty-cart" *ngIf="!isLoading && cartSummary.isEmpty">
+    <div class="empty-cart-content">
+      <ion-icon name="cart-outline" size="large"></ion-icon>
+      <h2>Tu carrito está vacío</h2>
+      <p>¡Añade algunos productos increíbles y vuelve aquí para finalizar tu compra!</p>
+      <ion-button expand="block" color="primary" (click)="goToProducts()">
+        Explorar Productos
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Lista de productos en el carrito -->
+  <div class="cart-content" *ngIf="!isLoading && !cartSummary.isEmpty">
+    <!-- Items del carrito -->
+    <div class="cart-items">
+      <ion-card 
+        class="cart-item-card" 
+        *ngFor="let item of cartItems; trackBy: trackByItemId">
+        <ion-card-content>
+          <div class="item-content">
+            <!-- Imagen del producto -->
+            <div class="item-image">
+              <img [src]="item.product.imagen" [alt]="item.product.nombre">
+            </div>
+            
+            <!-- Información del producto -->
+            <div class="item-info">
+              <div class="item-brand">{{item.product.marca}}</div>
+              <h3 class="item-name">{{item.product.nombre}}</h3>
+              <p class="item-description">{{item.product.descripcionCorta}}</p>
+              
+              <!-- Variante seleccionada -->
+              <div class="item-variant" *ngIf="item.selectedVariant">
+                <ion-chip color="medium" outline="true">
+                  <ion-label>{{item.selectedVariant}}</ion-label>
+                </ion-chip>
+              </div>
+              
+              <!-- Precio -->
+              <div class="item-pricing">
+                <span class="item-price">
+                  {{item.priceAtTime | currency:'COP':'symbol':'1.0-0'}}
+                </span>
+                <span class="item-total" *ngIf="item.quantity > 1">
+                  Total: {{(item.priceAtTime * item.quantity) | currency:'COP':'symbol':'1.0-0'}}
+                </span>
+              </div>
+            </div>
+            
+            <!-- Controles de cantidad -->
+            <div class="item-controls">
+              <!-- Selector de cantidad -->
+              <div class="quantity-controls">
+                <ion-button 
+                  fill="clear" 
+                  size="small" 
+                  (click)="decreaseQuantity(item)"
+                  [disabled]="item.quantity <= 1">
+                  <ion-icon name="remove"></ion-icon>
+                </ion-button>
+                
+                <span class="quantity-display">{{item.quantity}}</span>
+                
+                <ion-button 
+                  fill="clear" 
+                  size="small" 
+                  (click)="increaseQuantity(item)">
+                  <ion-icon name="add"></ion-icon>
+                </ion-button>
+              </div>
+              
+              <!-- Botón eliminar -->
+              <ion-button 
+                fill="clear" 
+                color="danger" 
+                size="small"
+                (click)="removeItem(item)">
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    
+    <!-- Resumen del pedido -->
+    <ion-card class="order-summary">
+      <ion-card-header>
+        <ion-card-title>Resumen del Pedido</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="summary-line">
+          <span>Subtotal ({{cartSummary.totalItems}} items)</span>
+          <span>{{cartSummary.subtotal | currency:'COP':'symbol':'1.0-0'}}</span>
+        </div>
+        
+        <div class="summary-line" *ngIf="cart?.taxes">
+          <span>Impuestos</span>
+          <span>{{cart?.taxes | currency:'COP':'symbol':'1.0-0'}}</span>
+        </div>
+        
+        <div class="summary-line" *ngIf="cart?.shipping">
+          <span>Envío</span>
+          <span>{{cart?.shipping | currency:'COP':'symbol':'1.0-0'}}</span>
+        </div>
+        
+        <div class="summary-line" *ngIf="cart?.discounts">
+          <span>Descuentos</span>
+          <span class="discount">-{{cart?.discounts | currency:'COP':'symbol':'1.0-0'}}</span>
+        </div>
+        
+        <div class="summary-divider"></div>
+        
+        <div class="summary-line total">
+          <span>Total</span>
+          <span>{{cartSummary.total | currency:'COP':'symbol':'1.0-0'}}</span>
+        </div>
+        
+        <!-- Botones de acción -->
+        <div class="action-buttons">
+          <ion-button 
+            expand="block" 
+            color="primary" 
+            size="large"
+            (click)="proceedToCheckout()">
+            <ion-icon name="card-outline" slot="start"></ion-icon>
+            Proceder al Pago
+          </ion-button>
+          
+          <ion-button 
+            expand="block" 
+            fill="outline" 
+            color="medium" 
+            (click)="goToProducts()">
+            Continuar Comprando
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
