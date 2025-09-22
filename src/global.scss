@@ -35,3 +35,71 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+/* Estilos personalizados para ElectroStore */
+
+// Alert personalizado para preview de productos
+.product-preview-alert {
+  .alert-wrapper {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    
+    .alert-head {
+      background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+      color: white;
+      padding: 20px;
+      
+      .alert-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0;
+        color: white;
+      }
+      
+      .alert-sub-title {
+        font-size: 14px;
+        margin: 4px 0 0 0;
+        opacity: 0.9;
+        color: white;
+      }
+    }
+    
+    .alert-message {
+      padding: 20px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ion-color-dark);
+      background: white;
+    }
+    
+    .alert-button-group {
+      background: var(--ion-color-light);
+      
+      .alert-button {
+        font-weight: 600;
+        
+        &.alert-confirm-btn {
+          background: var(--ion-color-primary);
+          color: white;
+          
+          &:hover {
+            background: var(--ion-color-primary-shade);
+          }
+        }
+        
+        &.alert-cancel-btn {
+          background: transparent;
+          color: var(--ion-color-medium);
+        }
+        
+        &.alert-disabled-btn {
+          background: var(--ion-color-medium);
+          color: var(--ion-color-medium-contrast);
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}

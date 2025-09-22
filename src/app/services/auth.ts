@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User, LoginData, RegisterData, AuthResponse } from '../models/user.model';
+import { User, LoginData, RegisterData, AuthResponse, UserRole, JwtPayload } from '../models/user.model';
+import { JwtService } from './jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,30 @@ export class AuthService {
       apellido: 'ElectroStore',
       telefono: '+57 300 1234567',
       fechaCreacion: new Date('2024-01-01'),
-      activo: true
+      ultimoAcceso: new Date(),
+      activo: true,
+      rol: UserRole.ADMIN,
+      preferencias: {
+        tema: 'auto',
+        notificaciones: true,
+        idioma: 'es'
+      }
+    },
+    {
+      id: '2',
+      email: 'user@electrostore.com',
+      nombre: 'Usuario',
+      apellido: 'Demo',
+      telefono: '+57 300 9876543',
+      fechaCreacion: new Date('2024-01-15'),
+      ultimoAcceso: new Date(),
+      activo: true,
+      rol: UserRole.USER,
+      preferencias: {
+        tema: 'light',
+        notificaciones: true,
+        idioma: 'es'
+      }
     }
   ];
   
@@ -26,9 +50,10 @@ export class AuthService {
   public currentUser$ = this.currentUserSubject.asObservable();
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor() {
+  constructor(private jwtService: JwtService) {
     // Verificar si hay una sesión guardada al inicializar
     this.checkStoredSession();
+    console.log('🔐 AuthService inicializado con JWT');
   }
 
   /**

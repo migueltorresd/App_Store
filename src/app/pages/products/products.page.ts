@@ -217,32 +217,38 @@ export class ProductsPage implements OnInit, OnDestroy {
   }
 
   /**
-   * Mostrar preview del producto
+   * Mostrar preview del producto mejorado
    */
   async showProductPreview(product: Product): Promise<void> {
+    // Crear mensaje sin HTML crudo
+    const stockText = product.estado === 'agotado' 
+      ? 'Producto agotado' 
+      : `${product.stock} unidades disponibles`;
+    
+    const ratingText = `Valoración: ${product.valoracion}/5 (${product.numeroReviews} reviews)`;
+    
     const alert = await this.alertController.create({
       header: product.nombre,
       subHeader: `${product.marca} - ${this.formatPrice(product.precio)}`,
-      message: `
-        <div style="text-align: center; margin: 10px 0;">
-          <img src="${product.imagen}" style="max-width: 150px; border-radius: 8px;">
-        </div>
-        <p>${product.descripcion}</p>
-        <p><strong>Stock:</strong> ${product.stock} unidades</p>
-        <p><strong>Valoración:</strong> ${product.valoracion}/5 (${product.numeroReviews} reviews)</p>
-      `,
+      message: `${product.descripcion}\n\nℹ️ ${stockText}\n⭐ ${ratingText}`,
       buttons: [
         {
           text: 'Cerrar',
-          role: 'cancel'
+          role: 'cancel',
+          cssClass: 'alert-cancel-btn'
         },
         {
-          text: 'Añadir al carrito',
+          text: product.estado === 'agotado' ? 'Producto Agotado' : 'Añadir al carrito',
+          cssClass: product.estado === 'agotado' ? 'alert-disabled-btn' : 'alert-confirm-btn',
           handler: () => {
-            this.addToCart(product, new Event('click'));
+            if (product.estado !== 'agotado') {
+              this.addToCart(product, new Event('click'));
+            }
+            return true;
           }
         }
-      ]
+      ],
+      cssClass: 'product-preview-alert'
     });
 
     await alert.present();

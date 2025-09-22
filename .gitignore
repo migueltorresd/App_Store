@@ -68,3 +68,10 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Carpetas de trabajo local
+product-images-upload/
+*SUMMARY*.md
+*summary*.md
+*PHASE*.md
+*phase*.md
