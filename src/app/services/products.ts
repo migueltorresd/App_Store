@@ -38,7 +38,7 @@ export class ProductsService {
         categoria: ProductCategory.SMARTPHONES,
         marca: ProductBrand.APPLE,
         precio: 4299000,
-        imagen: 'https://via.placeholder.com/400x400/1976D2/FFFFFF?text=iPhone+15+Pro',
+        imagen: 'assets/images/products/smartphones/iphone_15_pro.svg',
         stock: 15,
         estado: ProductStatus.DISPONIBLE,
         especificaciones: {
@@ -68,7 +68,7 @@ export class ProductsService {
         precio: 5199000,
         precioOriginal: 5699000,
         descuento: 9,
-        imagen: 'https://via.placeholder.com/400x400/6B46C1/FFFFFF?text=Galaxy+S24+Ultra',
+        imagen: 'assets/images/products/smartphones/galaxy_s24_ultra.svg',
         stock: 8,
         estado: ProductStatus.DISPONIBLE,
         especificaciones: {
@@ -96,7 +96,7 @@ export class ProductsService {
         categoria: ProductCategory.SMARTPHONES,
         marca: ProductBrand.XIAOMI,
         precio: 3499000,
-        imagen: 'https://via.placeholder.com/400x400/EF4444/FFFFFF?text=Xiaomi+14+Pro',
+        imagen: 'assets/images/products/smartphones/xiaomi_14_pro.svg',
         stock: 12,
         estado: ProductStatus.DISPONIBLE,
         especificaciones: {
@@ -125,7 +125,7 @@ export class ProductsService {
         categoria: ProductCategory.LAPTOPS,
         marca: ProductBrand.APPLE,
         precio: 9899000,
-        imagen: 'https://via.placeholder.com/400x400/374151/FFFFFF?text=MacBook+Pro+16',
+        imagen: 'assets/images/products/laptops/macbook_pro_16_m3.svg',
         stock: 5,
         estado: ProductStatus.DISPONIBLE,
         especificaciones: {
@@ -152,7 +152,7 @@ export class ProductsService {
         categoria: ProductCategory.AUDIO,
         marca: ProductBrand.SONY,
         precio: 1299000,
-        imagen: 'https://via.placeholder.com/400x400/1F2937/FFFFFF?text=Sony+WH-1000XM5',
+        imagen: 'assets/images/products/audio/sony_wh1000xm5.svg',
         stock: 20,
         estado: ProductStatus.DISPONIBLE,
         especificaciones: {
@@ -177,7 +177,7 @@ export class ProductsService {
         categoria: ProductCategory.GAMING,
         marca: ProductBrand.PLAYSTATION,
         precio: 2499000,
-        imagen: 'https://via.placeholder.com/400x400/0EA5E9/FFFFFF?text=PlayStation+5',
+        imagen: 'assets/images/products/gaming/playstation_5.svg',
         stock: 3,
         estado: ProductStatus.DISPONIBLE,
         especificaciones: {
