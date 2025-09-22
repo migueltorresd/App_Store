@@ -1,0 +1,144 @@
+// Estilos minimalistas para la página de Login
+
+.login-content {
+  --background: #ffffff;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 24px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+// Header minimalista
+.header-section {
+  text-align: center;
+  margin-bottom: 48px;
+  
+  .app-name {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+  }
+  
+  .welcome-subtitle {
+    font-size: 16px;
+    color: #666666;
+    margin: 0;
+    font-weight: 400;
+  }
+}
+
+// Form minimalista
+.login-form {
+  margin-bottom: 32px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+  
+  .form-input {
+    --border-radius: 8px;
+    --border-width: 1px;
+    --border-color: #e0e0e0;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --min-height: 48px;
+    font-size: 16px;
+    
+    &:focus-within {
+      --border-color: var(--ion-color-primary);
+      --border-width: 2px;
+    }
+  }
+  
+  .toggle-password {
+    --color: #999999;
+    margin: 0;
+    
+    &:hover {
+      --color: var(--ion-color-primary);
+    }
+  }
+  
+  .error-message {
+    color: var(--ion-color-danger);
+    font-size: 14px;
+    margin-top: 6px;
+    padding-left: 4px;
+  }
+}
+
+// Botón de login minimalista
+.login-button {
+  --background: #1a1a1a;
+  --color: white;
+  --border-radius: 8px;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 8px;
+  
+  &:hover:not([disabled]) {
+    --background: #333333;
+  }
+  
+  &[disabled] {
+    --background: #cccccc;
+    --color: #999999;
+  }
+  
+  ion-spinner {
+    margin-right: 8px;
+  }
+}
+
+// Link a registro minimalista
+.register-link {
+  text-align: center;
+  
+  p {
+    color: #666666;
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .register-button {
+    --color: var(--ion-color-primary);
+    font-weight: 500;
+    font-size: 16px;
+  }
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .login-container {
+    padding: 32px 20px;
+  }
+  
+  .header-section {
+    margin-bottom: 40px;
+    
+    .app-name {
+      font-size: 24px;
+    }
+  }
+}
+
+@media (max-height: 600px) {
+  .login-container {
+    padding: 24px 20px;
+    justify-content: flex-start;
+    padding-top: 60px;
+  }
+  
+  .header-section {
+    margin-bottom: 32px;
+  }
+}

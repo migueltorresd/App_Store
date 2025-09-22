@@ -1,0 +1,220 @@
+// Estilos minimalistas para la página de Registro
+
+.register-content {
+  --background: #ffffff;
+}
+
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 40px 24px 32px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+// Header minimalista
+.header-section {
+  text-align: center;
+  margin-bottom: 40px;
+  
+  .app-name {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+  }
+  
+  .welcome-subtitle {
+    font-size: 16px;
+    color: #666666;
+    margin: 0;
+    font-weight: 400;
+  }
+}
+
+// Form minimalista
+.register-form {
+  margin-bottom: 32px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  
+  .form-item {
+    --border-radius: 8px;
+    --border-width: 1px;
+    --border-color: #e0e0e0;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --min-height: 48px;
+    
+    &:focus-within {
+      --border-color: var(--ion-color-primary);
+      --border-width: 2px;
+    }
+    
+    &.has-error {
+      --border-color: var(--ion-color-danger);
+      --border-width: 2px;
+    }
+  }
+  
+  .form-input {
+    font-size: 16px;
+  }
+  
+  .toggle-password {
+    --color: #999999;
+    margin: 0;
+    
+    &:hover {
+      --color: var(--ion-color-primary);
+    }
+  }
+  
+  .error-message {
+    color: var(--ion-color-danger);
+    font-size: 14px;
+    margin-top: 6px;
+    padding-left: 4px;
+  }
+}
+
+// Términos y condiciones minimalista
+.terms-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  
+  .terms-checkbox {
+    --checkbox-background-checked: var(--ion-color-primary);
+    --border-radius: 4px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  
+  .terms-text {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #666666;
+    
+    .link-button {
+      --color: var(--ion-color-primary);
+      --padding-start: 0;
+      --padding-end: 0;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: underline;
+      margin: 0;
+      height: auto;
+      min-height: auto;
+    }
+  }
+}
+
+// Botón de registro minimalista
+.register-button {
+  --background: #1a1a1a;
+  --color: white;
+  --border-radius: 8px;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 8px;
+  
+  &:hover:not([disabled]) {
+    --background: #333333;
+  }
+  
+  &[disabled] {
+    --background: #cccccc;
+    --color: #999999;
+  }
+  
+  ion-spinner {
+    margin-right: 8px;
+  }
+}
+
+// Link a login minimalista
+.login-link {
+  text-align: center;
+  margin-top: 24px;
+  
+  p {
+    color: #666666;
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .login-button {
+    --color: var(--ion-color-primary);
+    font-weight: 500;
+    font-size: 16px;
+  }
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .register-container {
+    padding: 32px 20px;
+  }
+  
+  .header-section {
+    margin-bottom: 32px;
+    
+    .app-name {
+      font-size: 24px;
+    }
+  }
+  
+  .form-group .form-item {
+    --min-height: 44px;
+    --padding-start: 14px;
+    --padding-end: 14px;
+  }
+  
+  .register-button {
+    height: 44px;
+    font-size: 15px;
+  }
+}
+
+@media (max-height: 700px) {
+  .register-container {
+    padding: 20px;
+    justify-content: flex-start;
+    padding-top: 40px;
+  }
+  
+  .header-section {
+    margin-bottom: 32px;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-height: 600px) {
+  .register-container {
+    padding-top: 20px;
+  }
+  
+  .header-section {
+    margin-bottom: 24px;
+    
+    .app-name {
+      font-size: 22px;
+    }
+  }
+  
+  .form-group {
+    margin-bottom: 14px;
+  }
+}

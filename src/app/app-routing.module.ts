@@ -21,7 +21,15 @@ const routes: Routes = [
     path: 'cart',
     loadChildren: () => import('./pages/cart/cart.module').then( m => m.CartPageModule),
     canActivate: [authGuard]
-  }
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
+  },
 ];
 
 @NgModule({
