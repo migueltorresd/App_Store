@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar color="primary">
     <ion-title>
       TechStore
@@ -28,82 +28,122 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">ElectroStore</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
 
   <div class="welcome-section">
-    <h1>Bienvenido a ElectroStore</h1>
-    <p>Los mejores productos electrónicos al mejor precio</p>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <ion-icon name="storefront" size="small"></ion-icon>
+        <span>TechStore</span>
+      </div>
+      <h1 class="hero-title">Bienvenido a TechStore</h1>
+      <p class="hero-subtitle">Descubre la última tecnología al mejor precio</p>
+    </div>
     
-    <div class="categories-grid">
-      <ion-card class="category-card">
-        <ion-card-content>
-          <ion-icon name="phone-portrait-outline" size="large"></ion-icon>
-          <h3>Smartphones</h3>
-        </ion-card-content>
-      </ion-card>
-      
-      <ion-card class="category-card">
-        <ion-card-content>
-          <ion-icon name="laptop-outline" size="large"></ion-icon>
-          <h3>Laptops</h3>
-        </ion-card-content>
-      </ion-card>
-      
-      <ion-card class="category-card">
-        <ion-card-content>
-          <ion-icon name="headset-outline" size="large"></ion-icon>
-          <h3>Audio</h3>
-        </ion-card-content>
-      </ion-card>
-      
-      <ion-card class="category-card">
-        <ion-card-content>
-          <ion-icon name="game-controller-outline" size="large"></ion-icon>
-          <h3>Gaming</h3>
-        </ion-card-content>
-      </ion-card>
+    <div class="categories-section">
+      <h2 class="section-title">Explora nuestras categorías</h2>
+      <div class="categories-grid">
+        <div class="category-card" (click)="goToCategory('smartphones')">
+          <div class="category-icon">
+            <ion-icon name="phone-portrait" size="large"></ion-icon>
+          </div>
+          <div class="category-content">
+            <h3>Smartphones</h3>
+            <p>Los últimos modelos</p>
+          </div>
+          <ion-icon name="chevron-forward" class="category-arrow"></ion-icon>
+        </div>
+        
+        <div class="category-card" (click)="goToCategory('laptops')">
+          <div class="category-icon">
+            <ion-icon name="laptop" size="large"></ion-icon>
+          </div>
+          <div class="category-content">
+            <h3>Laptops</h3>
+            <p>Potencia y rendimiento</p>
+          </div>
+          <ion-icon name="chevron-forward" class="category-arrow"></ion-icon>
+        </div>
+        
+        <div class="category-card" (click)="goToCategory('audio')">
+          <div class="category-icon">
+            <ion-icon name="headset" size="large"></ion-icon>
+          </div>
+          <div class="category-content">
+            <h3>Audio</h3>
+            <p>Sonido de calidad</p>
+          </div>
+          <ion-icon name="chevron-forward" class="category-arrow"></ion-icon>
+        </div>
+        
+        <div class="category-card" (click)="goToCategory('gaming')">
+          <div class="category-icon">
+            <ion-icon name="game-controller" size="large"></ion-icon>
+          </div>
+          <div class="category-content">
+            <h3>Gaming</h3>
+            <p>Para los gamers</p>
+          </div>
+          <ion-icon name="chevron-forward" class="category-arrow"></ion-icon>
+        </div>
+      </div>
     </div>
     
     <!-- Estado de autenticación -->
-    <div class="auth-status" *ngIf="!isAuthenticated">
-      <ion-card class="auth-card">
-        <ion-card-content>
-          <h3>🔒 ¡Inicia sesión para continuar!</h3>
+    <div class="auth-section" *ngIf="!isAuthenticated">
+      <div class="auth-card guest-card">
+        <div class="auth-icon">
+          <ion-icon name="lock-closed" size="large"></ion-icon>
+        </div>
+        <div class="auth-content">
+          <h3>¡Inicia sesión para continuar!</h3>
           <p>Accede a tu cuenta para explorar y comprar productos</p>
-          <ion-button expand="block" color="primary" (click)="quickLogin()" class="demo-login-btn">
-            🎯 Login Demo Rápido
-          </ion-button>
-          <ion-text color="medium">
-            <small>Usará credenciales: admin@electrostore.com</small>
-          </ion-text>
-        </ion-card-content>
-      </ion-card>
-    </div>
-
-    <div class="auth-status" *ngIf="isAuthenticated">
-      <ion-card class="auth-card authenticated">
-        <ion-card-content>
-          <div class="user-info">
-            <ion-icon name="checkmark-circle" color="success"></ion-icon>
-            <div>
-              <h3>¡Hola, {{currentUser?.nombre}}!</h3>
-              <p>Bienvenido de vuelta a ElectroStore</p>
-            </div>
-          </div>
-          
-          <div class="action-buttons">
-            <ion-button expand="block" color="primary" class="cta-button" (click)="goToProducts()">
-              <ion-icon name="storefront-outline" slot="start"></ion-icon>
-              Explorar Productos
+          <div class="auth-actions">
+            <ion-button expand="block" fill="solid" color="primary" (click)="quickLogin()" class="primary-btn">
+              <ion-icon name="flash" slot="start"></ion-icon>
+              Login Demo Rápido
+            </ion-button>
+            <ion-button expand="block" fill="outline" color="primary" (click)="router.navigate(['/login'])" class="secondary-btn">
+              <ion-icon name="person" slot="start"></ion-icon>
+              Iniciar Sesión
             </ion-button>
           </div>
-        </ion-card-content>
-      </ion-card>
+          <ion-text color="medium" class="auth-note">
+            <small>🎯 Demo usará: admin@techstore.com</small>
+          </ion-text>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-section" *ngIf="isAuthenticated">
+      <div class="auth-card authenticated-card">
+        <div class="auth-icon success">
+          <ion-icon name="checkmark-circle" size="large"></ion-icon>
+        </div>
+        <div class="auth-content">
+          <div class="welcome-text">
+            <h3>¡Hola, {{currentUser?.nombre || currentUser?.name}}!</h3>
+            <p>Bienvenido de vuelta a TechStore</p>
+          </div>
+          
+          <div class="auth-actions">
+            <ion-button expand="block" fill="solid" color="primary" (click)="goToProducts()" class="primary-btn">
+              <ion-icon name="storefront" slot="start"></ion-icon>
+              Explorar Productos
+            </ion-button>
+            <div class="quick-actions">
+              <ion-button fill="outline" color="medium" size="small" (click)="goToProducts()">
+                <ion-icon name="search" slot="start"></ion-icon>
+                Buscar
+              </ion-button>
+              <ion-button fill="outline" color="medium" size="small">
+                <ion-icon name="cart" slot="start"></ion-icon>
+                Carrito
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

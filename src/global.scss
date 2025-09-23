@@ -33,14 +33,21 @@
   --techstore-secondary: #764ba2;
   --techstore-secondary-dark: #6a4190;
   
+  /* Colores de tema adaptivos */
+  --techstore-bg-primary: #ffffff;
+  --techstore-bg-secondary: #f8f9fa;
+  --techstore-bg-tertiary: #ffffff;
+  --techstore-surface: #ffffff;
+  --techstore-surface-variant: #f5f6fa;
+  
   /* Gradientes */
   --techstore-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --techstore-gradient-hover: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
   
   /* Colores de texto */
-  --techstore-text-primary: #1a1a1a;
+  --techstore-text-primary: #2d2d2d;
   --techstore-text-secondary: #5a5a5a;
-  --techstore-text-muted: #666666;
+  --techstore-text-muted: #737373;
   --techstore-text-light: #999999;
   
   /* Colores de fondo */
@@ -67,6 +74,41 @@
   /* Transiciones */
   --techstore-transition: all 0.3s ease;
   --techstore-transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --techstore-transition-theme: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Tema oscuro mejorado */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --techstore-bg-primary: #1a1a1a;
+    --techstore-bg-secondary: #2d2d2d;
+    --techstore-bg-tertiary: #1e1e1e;
+    --techstore-surface: #2a2a2a;
+    --techstore-surface-variant: #333333;
+    --techstore-text-primary: #ffffff;
+    --techstore-text-secondary: #b3b3b3;
+    --techstore-text-muted: #888888;
+    --techstore-border-color: #404040;
+  }
+}
+
+/* Aplicar transiciones suaves a todos los elementos */
+* {
+  transition: var(--techstore-transition-theme);
+}
+
+/* Mejor soporte para tema oscuro en cards */
+ion-card {
+  background: var(--techstore-surface) !important;
+  transition: var(--techstore-transition-theme), transform 0.2s ease !important;
+}
+
+ion-content {
+  --background: var(--techstore-bg-primary) !important;
+}
+
+ion-toolbar {
+  --background: var(--techstore-surface) !important;
 }
 
 /* Clases utilitarias globales */
@@ -122,14 +164,14 @@
 // Input con estilos consistentes
 .techstore-input {
   --background: var(--techstore-bg-input);
-  --color: var(--techstore-text-primary);
-  --placeholder-color: var(--techstore-text-muted);
+  --color: var(--techstore-text-primary) !important;
+  --placeholder-color: var(--techstore-text-muted) !important;
   --border-radius: var(--techstore-border-radius);
   --border-width: 2px;
   --border-color: var(--techstore-border-color);
-  --padding-start: 18px;
-  --padding-end: 18px;
-  --min-height: 56px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 48px;
   font-size: 16px;
   font-weight: 500;
   transition: var(--techstore-transition);
@@ -140,6 +182,7 @@
     --border-color: var(--techstore-primary);
     --border-width: 2px;
     --background: var(--techstore-bg-input);
+    --color: var(--techstore-text-primary) !important;
     box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
     transform: translateY(-1px);
   }
@@ -148,6 +191,11 @@
     --color: var(--techstore-text-primary) !important;
     --placeholder-color: var(--techstore-text-muted) !important;
     font-weight: 500;
+    color: var(--techstore-text-primary) !important;
+  }
+  
+  input {
+    color: var(--techstore-text-primary) !important;
   }
 }
 
